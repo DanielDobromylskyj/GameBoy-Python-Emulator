@@ -13,8 +13,6 @@ class ROM():
         self.RawGB = [data[i*2:(i*2)+2] for i in range(len(data) // 2)]
         self.FileSize = len(self.RawGB)
 
-    def Refortmat(self, Opcode, SavePath):
-
 
 
     def Read(self, Location):

@@ -1,24 +1,24 @@
-from emulator import OPCODES, RAM, ROM, CPU
+from emulator import OPCODES, RAM, ROM, CPU, Commands
 
 
 
 class Main:
     def __init__(self):
-        self.RAM = RAM.RAM()
+        self.RAM = RAM
         self.ROM = ROM.ROM()
-
 
         self.Opcode = OPCODES.Codes()
 
 
         self.Registers = RAM.Register
+        self.CMD = Commands
 
     def LoadGB(self, path):
         self.ROM.LoadGB(path)
 
 
     def Execute(self):
-        cpu = CPU.Main(self.RAM, self.ROM, self.Opcode)
+        cpu = CPU.Main(self.RAM, self.ROM, self.Opcode, self.CMD)
         cpu.Start_Executing_From_ROM()
 
 

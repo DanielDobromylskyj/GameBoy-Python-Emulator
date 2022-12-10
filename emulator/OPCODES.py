@@ -10,10 +10,20 @@ class Codes():
             "04": [""],  #
         }
 
+        self.PrefixTable = {
+            "00":["Register['B'].Set(CMD.LeftShift(Register['b'].Fetch(), 1))"],  # RLC B
+        }
+
         self.ExtraBytes = { # How Many bytes / instructions do we need to save to what location before executing the next instruction
-            "00": None,
+            "00": 0,
             "01": 2,
         }
 
+
+
     def ToPython(self, code):
-        return "\n".join(self.CodesToPython[code])
+        try:
+            return "\n".join(self.CodesToPython[code])
+        except KeyError:
+            print("[Emulator][Decoder] Opcode not found for:", code)
+            return ""
