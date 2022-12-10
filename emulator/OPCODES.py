@@ -11,13 +11,47 @@ class Codes():
         }
 
         self.PrefixTable = {
-            "00":["Register['B'].Set(CMD.LeftShift(Register['b'].Fetch(), 1))"],  # RLC B
+            # RLC - This Chunk Is Incorrect - Doesn't use the carry REG
+            "00": ["binary.LeftShift(Register['B'])"],
+            "01": ["binary.LeftShift(Register['C'])"],
+            "02": ["binary.LeftShift(Register['D'])"],
+            "03": ["binary.LeftShift(Register['E'])"],
+            "04": ["binary.LeftShift(Register['H'])"],
+            "05": ["binary.LeftShift(Register['L'])"],
+            "06": ["binary.LeftShift(Register['HL'])"],
+            "07": ["binary.LeftShift(Register['A'])"],
+            # RRC - This Chunk Is Incorrect - Doesn't use the carry REG
+            "08": ["binary.RightShift(Register['B'])"],
+            "09": ["binary.RightShift(Register['C'])"],
+            "0a": ["binary.RightShift(Register['D'])"],
+            "0b": ["binary.RightShift(Register['E'])"],
+            "0c": ["binary.RightShift(Register['H'])"],
+            "0d": ["binary.RightShift(Register['L'])"],
+            "0e": ["binary.RightShift(Register['HL'])"],
+            "0f": ["binary.RightShift(Register['A'])"],
+
+            # RL
+            "10": ["binary.LeftShift(Register['B'])"],
+            "11": ["binary.LeftShift(Register['C'])"],
+            "12": ["binary.LeftShift(Register['D'])"],
+            "13": ["binary.LeftShift(Register['E'])"],
+            "14": ["binary.LeftShift(Register['H'])"],
+            "15": ["binary.LeftShift(Register['L'])"],
+            "16": ["binary.LeftShift(Register['HL'])"],
+            "17": ["binary.LeftShift(Register['A'])"],
+            # RR
+            "18": ["binary.RightShift(Register['B'])"],
+            "19": ["binary.RightShift(Register['C'])"],
+            "1a": ["binary.RightShift(Register['D'])"],
+            "1b": ["binary.RightShift(Register['E'])"],
+            "1c": ["binary.RightShift(Register['H'])"],
+            "1d": ["binary.RightShift(Register['L'])"],
+            "1e": ["binary.RightShift(Register['HL'])"],
+            "1f": ["binary.RightShift(Register['A'])"],
+
         }
 
-        self.ExtraBytes = { # How Many bytes / instructions do we need to save to what location before executing the next instruction
-            "00": 0,
-            "01": 2,
-        }
+
 
 
 

@@ -14,18 +14,3 @@ class RAM():
         except:
             print("[Emulator][RAM] Read Error, No Data Set At Pos:", Pos)
 
-
-
-
-class Register():
-    def __init__(self, Data=None):
-        if Data == None:
-            self.Data = 0
-        else:
-            self.Data = Data
-
-    def Fetch(self):
-        return self.Data
-
-    def Set(self, Data):
-        self.Data = Data

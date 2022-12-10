@@ -4,18 +4,27 @@
 
 
 class Main():
-    def __init__(self, RAM, ROM, Opcodes, CMNDS):
-        self.ROM, self.RAM, self.Opcodes, self.CM = ROM, RAM.RAM(), Opcodes, CMNDS
+    def __init__(self, RAM, ROM, Opcodes, CMNDS, BIN, ALU):
+        self.ROM, self.RAM, self.Opcodes, self.CM, self.binary, self.alu = ROM, RAM.RAM(), Opcodes, CMNDS, BIN, ALU
 
 
         self.NextLineNumber = 1
 
         # Create Registers
-        alpha = list("ABCDEHL")
+        alpha = "BC,DE,HL,SP,A,c".split(",") # c = Carry (CY)
         self.Registers = {}
         for letter in alpha:
-            self.Registers[letter] = RAM.Register()
+            if len(letter) == 1:
+                self.Registers[letter] = self.binary._8bit() #RAM.Register(letter)
+            else:
+                x = self.binary._16bit(letter[0], self.binary._8bit(), letter[1], self.binary._8bit()) # Creates 2 8bit registers
+                x.WriteBinaryString("0000000000000000")
+                self.Registers[letter] = x
+                                                                                                                            # then combines Them
 
+        self.ALU = self.alu.Core(self, self.binary) # Init the ALU
+
+        self.ALU.ADD("B")
 
     def Start_Executing_From_ROM(self):
         LineNumber = 0
@@ -36,6 +45,7 @@ class Main():
         CMD = self.CM # Lets u sdo things like shifting binary and other stuff like that
         Register = self.Registers
         Prefix = self.Opcodes.PrefixTable
+        binary = self.binary
 
         exec(self.Opcodes.ToPython(HEX))
 
