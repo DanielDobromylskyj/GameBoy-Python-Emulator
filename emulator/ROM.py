@@ -10,6 +10,7 @@ class ROM():
         data = f.read().hex()
         f.close()
 
+
         self.RawGB = [data[i*2:(i*2)+2] for i in range(len(data) // 2)]
         self.FileSize = len(self.RawGB)
 

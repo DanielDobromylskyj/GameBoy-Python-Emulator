@@ -3,11 +3,80 @@
 class Codes():
     def __init__(self):
         self.CodesToPython = {
-            "00": [""],  # NOP (No-Op / No Oporation)               DONE
-            "01": [""],  # LD BC d16 (Move a value from A to B)
-            "02": [""],  #
-            "03": [""],  #
-            "04": [""],  #
+            "00": [""],  # NOP (No-Op / No Oporation)                                                                   DONE
+            "01": ["Register['BC'].WriteDenary(1)"],  # LD BC d16                                                       UNSURE
+            "02": ["memory.Write(Register['BC'].ReadBinaryString(), Register['AF'].ReadBinaryString('A'))"],  #         NOTEST
+            "03": ["binary.Increment(Register['BC'])"],  #                                                              NOTEST
+            "04": ["binary.Increment(Register['BC'], 'B')"],  #                                                         NOTEST
+            "05": ["binary.Decrement(Register['BC'], 'B')"],  #                                                         NOTEST
+            "06": ["Register['BC'].WriteDenary(0, 'B')"],     #                                                         NOTEST
+            "07": [""],
+            "08": [""],
+            "09": [""],
+            "0a": [""],
+            "0b": [""],
+            "0c": [""],
+            "0d": [""],
+            "0e": [""],
+            "0f": [""],
+
+            "10": ["system.Halt()"], # Stop CPU                                                                         UNSURE/UNKNOWN
+            "11": ["Register['DE'].WriteDenary(0)"],  # LD BC d16                                                       UNSURE
+            "12": ["memory.Write(Register['DE'].ReadBinaryString(), Register['AF'].ReadBinaryString('A'))"],  #         NOTEST
+            "13": ["binary.Increment(Register['DE'])"],  #                                                              NOTEST
+            "14": ["binary.Increment(Register['DE'], 'D')"],  #                                                         NOTEST
+            "15": ["binary.Decrement(Register['DE'], 'D')"],  #                                                         NOTEST
+            "16": ["Register['DE'].WriteDenary(0, 'D')"],     #                                                         NOTEST
+            "17": [""],
+            "18": [""],
+            "19": [""],
+            "1a": [""],
+            "1b": [""],
+            "1c": [""],
+            "1d": [""],
+            "1e": [""],
+            "1f": [""],
+
+            "20": [""], #                                                                                               UNKNOWN
+            "21": ["Register['HL'].WriteDenary(0)"],  #                                                                 UNSURE
+            "22": ["binary.Increment(Register['AF'], 'A')",
+                   "memory.Write(Register['HL'].ReadBinaryString(), Register['AF'].ReadBinaryString('A'))",
+                   "binary.Decrement(Register['AF'], 'A')"],  #                                                         NOTEST
+            "23": ["binary.Increment(Register['HL'])"],  #                                                              NOTEST
+            "24": ["binary.Increment(Register['HL'], 'H')"],  #                                                         NOTEST
+            "25": ["binary.Decrement(Register['HL'], 'H')"],  #                                                         NOTEST
+            "26": ["Register['HL'].WriteDenary(0, 'H')"],  #                                                            NOTEST
+            "27": [""],
+            "28": [""],
+            "29": [""],
+            "2a": [""],
+            "2b": [""],
+            "2c": [""],
+            "2d": [""],
+            "2e": [""],
+            "2f": [""],
+
+            "30": [""],  # UNKNOWN
+            "31": ["Register['HL'].WriteDenary(0)"],  # UNSURE
+            "32": ["binary.Decrement(Register['AF'], 'A')",
+                   "memory.Write(Register['HL'].ReadBinaryString(), Register['AF'].ReadBinaryString('A'))",
+                   "binary.Increment(Register['AF'], 'A')"],  # NOTEST
+            "33": ["binary.Increment(Register['SP'])"],  # NOTEST
+            "34": ["binary.Increment(Register['HL'], 'H')"],  # NOTEST
+            "35": ["binary.Decrement(Register['SP'])"],  # NOTEST
+            "36": ["Register['HL'].WriteDenary(0, 'H')"],  # NOTEST
+            "37": [""],
+            "38": [""],
+            "39": [""],
+            "3a": [""],
+            "3b": [""],
+            "3c": [""],
+            "3d": [""],
+            "3e": [""],
+            "3f": [""],
+
+            "cb":["print('--------------------------------------------------------------------')"]
+
         }
 
         self.PrefixTable = {
