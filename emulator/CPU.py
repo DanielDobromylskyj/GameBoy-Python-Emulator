@@ -37,19 +37,26 @@ class Main():
             LineNumber = int(str(self.NextLineNumber)) # Change The Line Number
 
         print("[Emulator][CPU] Finished Executing Program")
+        self.Dump()
 
-        print("[Emulator][DUMP] Dumping Register Contents")
+    def Dump(self):
+        print("[Emulator][DUMP] Dumping Registers To dump/registers.dump")
+        x = ""
         for key in self.Registers.keys():
-            try:
-                print("Register (RAWVAR):", key, "Data:", self.Registers[key].Value)
-            except:
-                print("16 Bit Register")
-            print("Register (Denary):", key, "Data:", self.Registers[key].ReadDenary())
-            print("Register (Binary):", key, "Data:", self.Registers[key].ReadBinaryString())
+            x = x + "\nRegister (Denary): " + str(key) + " Data: " +  str(self.Registers[key].ReadDenary())
+            x = x + "\nRegister (Binary): " + str(key) + " Data: " +  str(self.Registers[key].ReadBinaryString())
+        # registers.dump
+        print("[Emulator][Dump] Dumping RAM To dump/ram.dump")
+        f = open("dump/ram.dump", "w")
+        f.write(str(self.RAM.Data))
+        f.close()
+        f = open("dump/registers.dump", "w")
+        f.write(x)
+        f.close()
+
 
     def Halt(self):
-        print("System Halted - Idk What to do so just wait 10s")
-        #time.sleep(10)
+        print("[Emulator] Halted - Idk What to do for this command")
 
     def ExecuteHEX(self, HEX):
         # Allows for cleaner writing of codes / HEX to Python
