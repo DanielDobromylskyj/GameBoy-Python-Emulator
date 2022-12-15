@@ -50,6 +50,7 @@ class _16bit():
         self.NameB = Reg_B_Name
 
     def WriteDenary(self, Value, Register="16bit"):
+        Value = int(Value)
         if len(Register) == 1:
             if Register == self.NameA:
                 self.RegA.WriteDenary(Value)
@@ -59,6 +60,7 @@ class _16bit():
         else:# 16bit reg : 8BitReg(B) , 8BitReg(A)
             ByteB = math.floor(Value / 256) # 256 == 8bits / Removes Register A's Byte, Just leaving Byte B
             ByteA = Value - (ByteB * 256)  # Byte A == Value - Whats In Register B
+
             self.RegA.WriteDenary(ByteA)
             self.RegB.WriteDenary(ByteB)
 

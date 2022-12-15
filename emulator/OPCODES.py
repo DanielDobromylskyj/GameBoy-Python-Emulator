@@ -4,12 +4,16 @@ class Codes():
     def __init__(self):
         self.CodesToPython = {
             "00": [""],  # NOP (No-Op / No Oporation)                                                                   DONE
-            "01": ["Register['BC'].WriteDenary(1)"],  # LD BC d16                                                       UNSURE
+            "01": ["x = instructions.Read(system.NextLineNumber)",
+                   "y = instructions.Read(system.NextLineNumber + 1)",     #                                            POSSIBLE PROBLEM >> x + y or y + x?
+                   "Register['BC'].WriteDenary(system.Decode(x + y))",
+                   "system.NextLineNumber += 3"],  # LD BC d16                                                          UNSURE
             "02": ["memory.Write(Register['BC'].ReadBinaryString(), Register['AF'].ReadBinaryString('A'))"],  #         NOTEST
             "03": ["binary.Increment(Register['BC'])"],  #                                                              NOTEST
             "04": ["binary.Increment(Register['BC'], 'B')"],  #                                                         NOTEST
             "05": ["binary.Decrement(Register['BC'], 'B')"],  #                                                         NOTEST
-            "06": ["Register['BC'].WriteDenary(0, 'B')"],     #                                                         NOTEST
+            "06": ["Register['BC'].WriteDenary(system.Decode(instructions.Read(system.NextLineNumber)), 'B')",
+                   "system.NextLineNumber += 2"],     #                                                         NOTEST
             "07": [""],
             "08": [""],
             "09": [""],
@@ -20,13 +24,17 @@ class Codes():
             "0e": [""],
             "0f": [""],
 
-            "10": ["system.Halt()"], # Stop CPU                                                                         UNSURE/UNKNOWN
-            "11": ["Register['DE'].WriteDenary(0)"],  # LD BC d16                                                       UNSURE
+            "10": ["system.Stop()"], # Stop CPU                                                                         UNSURE/UNKNOWN
+            "11": ["x = instructions.Read(system.NextLineNumber)",
+                   "y = instructions.Read(system.NextLineNumber + 1)",     #                                            POSSIBLE PROBLEM >> x + y or y + x?
+                   "Register['DE'].WriteDenary(system.Decode(x + y))",
+                   "system.NextLineNumber += 3"],  # LD BC d16                                                       UNSURE
             "12": ["memory.Write(Register['DE'].ReadBinaryString(), Register['AF'].ReadBinaryString('A'))"],  #         NOTEST
             "13": ["binary.Increment(Register['DE'])"],  #                                                              NOTEST
             "14": ["binary.Increment(Register['DE'], 'D')"],  #                                                         NOTEST
             "15": ["binary.Decrement(Register['DE'], 'D')"],  #                                                         NOTEST
-            "16": ["Register['DE'].WriteDenary(0, 'D')"],     #                                                         NOTEST
+            "16": ["Register['DE'].WriteDenary(system.Decode(instructions.Read(system.NextLineNumber)), 'D')",
+                   "system.NextLineNumber += 2"],     #                                                         NOTEST
             "17": [""],
             "18": [""],
             "19": [""],
@@ -38,14 +46,18 @@ class Codes():
             "1f": [""],
 
             "20": [""], #                                                                                               UNKNOWN
-            "21": ["Register['HL'].WriteDenary(0)"],  #                                                                 UNSURE
+            "21": ["x = instructions.Read(system.NextLineNumber)",
+                   "y = instructions.Read(system.NextLineNumber + 1)",     #                                            POSSIBLE PROBLEM >> x + y or y + x?
+                   "Register['HL'].WriteDenary(system.Decode(x + y))",
+                   "system.NextLineNumber += 3"],  #                                                                 UNSURE
             "22": ["binary.Increment(Register['AF'], 'A')",
                    "memory.Write(Register['HL'].ReadBinaryString(), Register['AF'].ReadBinaryString('A'))",
                    "binary.Decrement(Register['AF'], 'A')"],  #                                                         NOTEST
             "23": ["binary.Increment(Register['HL'])"],  #                                                              NOTEST
             "24": ["binary.Increment(Register['HL'], 'H')"],  #                                                         NOTEST
             "25": ["binary.Decrement(Register['HL'], 'H')"],  #                                                         NOTEST
-            "26": ["Register['HL'].WriteDenary(0, 'H')"],  #                                                            NOTEST
+            "26": ["Register['HL'].WriteDenary(system.Decode(instructions.Read(system.NextLineNumber)), 'H')",
+                   "system.NextLineNumber += 2"],  #                                                            NOTEST
             "27": [""],
             "28": [""],
             "29": [""],
@@ -57,14 +69,18 @@ class Codes():
             "2f": [""],
 
             "30": [""],  # UNKNOWN
-            "31": ["Register['HL'].WriteDenary(0)"],  # UNSURE
+            "31": ["x = instructions.Read(system.NextLineNumber)",
+                   "y = instructions.Read(system.NextLineNumber + 1)",     #                                            POSSIBLE PROBLEM >> x + y or y + x?
+                   "Register['SP'].WriteDenary(system.Decode(x + y))",
+                   "system.NextLineNumber += 3"],  #                                                                    NOTEST
             "32": ["binary.Decrement(Register['AF'], 'A')",
                    "memory.Write(Register['HL'].ReadBinaryString(), Register['AF'].ReadBinaryString('A'))",
-                   "binary.Increment(Register['AF'], 'A')"],  # NOTEST
-            "33": ["binary.Increment(Register['SP'])"],  # NOTEST
-            "34": ["binary.Increment(Register['HL'], 'H')"],  # NOTEST
-            "35": ["binary.Decrement(Register['SP'])"],  # NOTEST
-            "36": ["Register['HL'].WriteDenary(0, 'H')"],  # NOTEST
+                   "binary.Increment(Register['AF'], 'A')"],  #                                                         NOTEST
+            "33": ["binary.Increment(Register['SP'])"],  #                                                              NOTEST
+            "34": ["binary.Increment(Register['HL'], 'H')"],  #                                                         NOTEST
+            "35": ["binary.Decrement(Register['SP'])"],  #                                                              NOTEST
+            "36": ["Register['HL'].WriteDenary(system.Decode(instructions.Read(system.NextLineNumber)))",
+                   "system.NextLineNumber += 2"],  #                                                            NOTEST
             "37": [""],
             "38": [""],
             "39": [""],
@@ -75,7 +91,211 @@ class Codes():
             "3e": [""],
             "3f": [""],
 
-            "cb":["print('--------------------------------------------------------------------')"]
+            "40": ["Register['BC'].WriteBinaryString(Register['BC'].ReadBinaryString('B'),'B')"],
+            "41": ["Register['BC'].WriteBinaryString(Register['BC'].ReadBinaryString('C'),'B')"],
+            "42": ["Register['BC'].WriteBinaryString(Register['DE'].ReadBinaryString('D'),'B')"],
+            "43": ["Register['BC'].WriteBinaryString(Register['DE'].ReadBinaryString('E'),'B')"],
+            "44": ["Register['BC'].WriteBinaryString(Register['HL'].ReadBinaryString('H'),'B')"],
+            "45": ["Register['BC'].WriteBinaryString(Register['HL'].ReadBinaryString('L'),'B')"],
+            "46": ["Register['BC'].WriteBinaryString(memory.Read(Register['HL'].ReadBinaryString()),'B')"],
+            "47": ["Register['BC'].WriteBinaryString(Register['AF'].ReadBinaryString('A'),'B')"],
+            "48": ["Register['BC'].WriteBinaryString(Register['BC'].ReadBinaryString('B'),'C')"],
+            "49": ["Register['BC'].WriteBinaryString(Register['DE'].ReadBinaryString('C'),'C')"],
+            "4a": ["Register['BC'].WriteBinaryString(Register['DE'].ReadBinaryString('D'),'C')"],
+            "4b": ["Register['BC'].WriteBinaryString(Register['DE'].ReadBinaryString('E'),'C')"],
+            "4c": ["Register['BC'].WriteBinaryString(Register['HL'].ReadBinaryString('H'),'C')"],
+            "4d": ["Register['BC'].WriteBinaryString(Register['HL'].ReadBinaryString('L'),'C')"],
+            "4e": ["Register['BC'].WriteBinaryString(memory.Read(Register['HL'].ReadBinaryString()),'C')"],
+            "4f": ["Register['BC'].WriteBinaryString(Register['AF'].ReadBinaryString('A'),'C')"],
+
+            "50": ["Register['DE'].WriteBinaryString(Register['BC'].ReadBinaryString('B'),'D')"],
+            "51": ["Register['DE'].WriteBinaryString(Register['BC'].ReadBinaryString('C'),'D')"],
+            "52": ["Register['DE'].WriteBinaryString(Register['DE'].ReadBinaryString('D'),'D')"],
+            "53": ["Register['DE'].WriteBinaryString(Register['DE'].ReadBinaryString('E'),'D')"],
+            "54": ["Register['DE'].WriteBinaryString(Register['HL'].ReadBinaryString('H'),'D')"],
+            "55": ["Register['DE'].WriteBinaryString(Register['HL'].ReadBinaryString('L'),'D')"],
+            "56": ["Register['DE'].WriteBinaryString(memory.Read(Register['HL'].ReadBinaryString()),'D')"],
+            "57": ["Register['DE'].WriteBinaryString(Register['AF'].ReadBinaryString('A'),'D')"],
+            "58": ["Register['DE'].WriteBinaryString(Register['BC'].ReadBinaryString('B'),'E')"],
+            "59": ["Register['DE'].WriteBinaryString(Register['BC'].ReadBinaryString('C'),'E')"],
+            "5a": ["Register['DE'].WriteBinaryString(Register['DE'].ReadBinaryString('D'),'E')"],
+            "5b": ["Register['DE'].WriteBinaryString(Register['DE'].ReadBinaryString('E'),'E')"],
+            "5c": ["Register['DE'].WriteBinaryString(Register['HL'].ReadBinaryString('H'),'E')"],
+            "5d": ["Register['DE'].WriteBinaryString(Register['HL'].ReadBinaryString('L'),'E')"],
+            "5e": ["Register['DE'].WriteBinaryString(memory.Read(Register['HL'].ReadBinaryString()),'E')"],
+            "5f": ["Register['DE'].WriteBinaryString(Register['AF'].ReadBinaryString('A'),'E')"],
+
+            "60": ["Register['HL'].WriteBinaryString(Register['BC'].ReadBinaryString('B'),'H')"],
+            "61": ["Register['HL'].WriteBinaryString(Register['BC'].ReadBinaryString('C'),'H')"],
+            "62": ["Register['HL'].WriteBinaryString(Register['DE'].ReadBinaryString('D'),'H')"],
+            "63": ["Register['HL'].WriteBinaryString(Register['DE'].ReadBinaryString('E'),'H')"],
+            "64": ["Register['HL'].WriteBinaryString(Register['HL'].ReadBinaryString('H'),'H')"],
+            "65": ["Register['HL'].WriteBinaryString(Register['HL'].ReadBinaryString('L'),'H')"],
+            "66": ["Register['HL'].WriteBinaryString(memory.Read(Register['HL'].ReadBinaryString()),'H')"],
+            "67": ["Register['HL'].WriteBinaryString(Register['AF'].ReadBinaryString('A'),'H')"],
+            "68": ["Register['HL'].WriteBinaryString(Register['BC'].ReadBinaryString('B'),'L')"],
+            "69": ["Register['HL'].WriteBinaryString(Register['BC'].ReadBinaryString('C'),'L')"],
+            "6a": ["Register['HL'].WriteBinaryString(Register['DE'].ReadBinaryString('D'),'L')"],
+            "6b": ["Register['HL'].WriteBinaryString(Register['DE'].ReadBinaryString('E'),'L')"],
+            "6c": ["Register['HL'].WriteBinaryString(Register['HL'].ReadBinaryString('H'),'L')"],
+            "6d": ["Register['HL'].WriteBinaryString(Register['HL'].ReadBinaryString('L'),'L')"],
+            "6e": ["Register['HL'].WriteBinaryString(memory.Read(Register['HL'].ReadBinaryString()),'L')"],
+            "6f": ["Register['HL'].WriteBinaryString(Register['AF'].ReadBinaryString('A'),'L')"],
+
+            "70": ["memory.Write(Register['HL'].ReadBinaryString(), Register['BC'].ReadBinaryString('B'))"],
+            "71": ["memory.Write(Register['HL'].ReadBinaryString(), Register['BC'].ReadBinaryString('C'))"],
+            "72": ["memory.Write(Register['HL'].ReadBinaryString(), Register['DE'].ReadBinaryString('D'))"],
+            "73": ["memory.Write(Register['HL'].ReadBinaryString(), Register['DE'].ReadBinaryString('E'))"],
+            "74": ["memory.Write(Register['HL'].ReadBinaryString(), Register['HL'].ReadBinaryString('H'))"],
+            "75": ["memory.Write(Register['HL'].ReadBinaryString(), Register['HL'].ReadBinaryString('L'))"],
+            "76": ["system.Halt()"],
+            "77": ["memory.Write(Register['HL'].ReadBinaryString(), Register['AF'].ReadBinaryString('A'))"],
+            "78": ["Register['AF'].WriteBinaryString(Register['BC'].ReadBinaryString('B'),'A')"],
+            "79": ["Register['AF'].WriteBinaryString(Register['BC'].ReadBinaryString('C'),'A')"],
+            "7a": ["Register['AF'].WriteBinaryString(Register['DE'].ReadBinaryString('D'),'A')"],
+            "7b": ["Register['AF'].WriteBinaryString(Register['DE'].ReadBinaryString('E'),'A')"],
+            "7c": ["Register['AF'].WriteBinaryString(Register['HL'].ReadBinaryString('H'),'A')"],
+            "7d": ["Register['AF'].WriteBinaryString(Register['HL'].ReadBinaryString('L'),'A')"],
+            "7e": ["Register['AF'].WriteBinaryString(memory.Read(Register['HL'].ReadBinaryString()),'A')"],
+            "7f": ["Register['AF'].WriteBinaryString(Register['AF'].ReadBinaryString('A'),'A')"],
+
+            "80": ["ALU.ADD_8Bit('BC', 'B')"],
+            "81": ["ALU.ADD_8Bit('BC', 'C')"],
+            "82": ["ALU.ADD_8Bit('DE', 'D')"],
+            "83": ["ALU.ADD_8Bit('DE', 'E')"],
+            "84": ["ALU.ADD_8Bit('HL', 'H')"],
+            "85": ["ALU.ADD_8Bit('HL', 'L')"],
+            "86": ["ALU.ADD_8Bit(memory.Read(Register['BC'].ReadBinaryString()))"],
+            "87": [""],
+            "88": [""],
+            "89": [""],
+            "8a": [""],
+            "8b": [""],
+            "8c": [""],
+            "8d": [""],
+            "8e": [""],
+            "8f": [""],
+
+            "90": [""],
+            "91": [""],
+            "92": [""],
+            "93": [""],
+            "94": [""],
+            "95": [""],
+            "96": [""],
+            "97": [""],
+            "98": [""],
+            "99": [""],
+            "9a": [""],
+            "9b": [""],
+            "9c": [""],
+            "9d": [""],
+            "9e": [""],
+            "9f": [""],
+
+            "a0": [""],
+            "a1": [""],
+            "a2": [""],
+            "a3": [""],
+            "a4": [""],
+            "a5": [""],
+            "a6": [""],
+            "a7": [""],
+            "a8": [""],
+            "a9": [""],
+            "aa": [""],
+            "ab": [""],
+            "ac": [""],
+            "ad": [""],
+            "ae": [""],
+            "af": [""],
+
+            "b0": [""],
+            "b1": [""],
+            "b2": [""],
+            "b3": [""],
+            "b4": [""],
+            "b5": [""],
+            "b6": [""],
+            "b7": [""],
+            "b8": [""],
+            "b9": [""],
+            "ba": [""],
+            "bb": [""],
+            "bc": [""],
+            "bd": [""],
+            "be": [""],
+            "bf": [""],
+
+            "c0": [""],
+            "c1": [""],
+            "c2": [""],
+            "c3": [""],
+            "c4": [""],
+            "c5": [""],
+            "c6": [""],
+            "c7": [""],
+            "c8": [""],
+            "c9": [""],
+            "ca": [""],
+            "cb": [""],
+            "cc": [""],
+            "cd": [""],
+            "ce": [""],
+            "cf": [""],
+
+            "d0": [""],
+            "d1": [""],
+            "d2": [""],
+            "d3": [""],
+            "d4": [""],
+            "d5": [""],
+            "d6": [""],
+            "d7": [""],
+            "d8": [""],
+            "d9": [""],
+            "da": [""],
+            "db": [""],
+            "dc": [""],
+            "dd": [""],
+            "de": [""],
+            "df": [""],
+
+            "e0": [""],
+            "e1": [""],
+            "e2": [""],
+            "e3": [""],
+            "e4": [""],
+            "e5": [""],
+            "e6": [""],
+            "e7": [""],
+            "e8": [""],
+            "e9": [""],
+            "ea": [""],
+            "eb": [""],
+            "ec": [""],
+            "ed": [""],
+            "ee": [""],
+            "ef": [""],
+
+            "f0": [""],
+            "f1": [""],
+            "f2": [""],
+            "f3": [""],
+            "f4": [""],
+            "f5": [""],
+            "f6": [""],
+            "f7": [""],
+            "f8": [""],
+            "f9": [""],
+            "fa": [""],
+            "fb": [""],
+            "fc": [""],
+            "fd": [""],
+            "fe": [""],
+            "ff": [""],
+
+
 
         }
 

@@ -28,7 +28,10 @@ class Main():
 
     def Start_Executing_From_ROM(self):
         LineNumber = 0
+        self.Go = 0
         for i in range(self.ROM.FileSize):
+            if LineNumber >= self.ROM.FileSize + self.Go:
+                break
             self.NextLineNumber += 1 # We do it now so it doesn't interupt the jump command blah blah blah
 
             HEX = self.ROM.Read(LineNumber) # Read Hex Value
@@ -55,9 +58,6 @@ class Main():
         f.close()
 
 
-    def Halt(self):
-        print("[Emulator] Halted - Idk What to do for this command")
-
     def ExecuteHEX(self, HEX):
         # Allows for cleaner writing of codes / HEX to Python
         Register = self.Registers
@@ -65,6 +65,7 @@ class Main():
         binary = self.binary
         ALU = self.ALU
         memory = self.RAM
+        instructions = self.ROM
         system = self
 
         t = self.Opcodes.ToPython(HEX)
@@ -73,6 +74,15 @@ class Main():
             exec(t)
         except Exception as e:
             print("[Emulator][Core] Failed To Execute Command:", e)
-            print("[Emulator][Core] Line Error:", t)
+            print("[Emulator][Core] Line Error:", t, HEX)
 
+    def Halt(self):
+        print("[Emulator] Halted - 'Low Power Mode'")
 
+    def Stop(self):
+        print("[Emulator] Stopped - 'Very Low Power Mode'")
+
+    def Decode(self, hex):
+        if type(hex) != int:
+            return int("0x" + str(hex), 0)
+        return hex

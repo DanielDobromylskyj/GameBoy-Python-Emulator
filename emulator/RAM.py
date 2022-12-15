@@ -13,4 +13,5 @@ class RAM():
             return self.Data[Pos]
         except:
             print("[Emulator][RAM] Read Error, No Data Set At Pos:", Pos)
+            return "00"
 

@@ -5,7 +5,7 @@ from emulator import OPCODES, RAM, ROM, CPU, Commands, Binary, ALU
 class Main:
     def __init__(self):
         self.RAM = RAM
-        self.ROM = ROM.ROM()
+        self.ROM = ROM.Cartridge()
         self.ALU = ALU
 
         self.Opcode = OPCODES.Codes()
