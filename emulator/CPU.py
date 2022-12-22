@@ -76,11 +76,11 @@ class Main():
             print("[Emulator][Core] Failed To Execute Command:", e)
             print("[Emulator][Core] Line Error:", t, HEX)
 
-    def Halt(self):
-        print("[Emulator] Halted - 'Low Power Mode'")
+    def Halt(self): pass
+        #print("[Emulator] Halted - 'Low Power Mode'")
 
-    def Stop(self):
-        print("[Emulator] Stopped - 'Very Low Power Mode'")
+    def Stop(self): pass
+        #print("[Emulator] Stopped - 'Very Low Power Mode'")
 
     def Decode(self, hex):
         if type(hex) != int:

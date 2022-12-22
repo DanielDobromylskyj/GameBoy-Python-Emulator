@@ -1,13 +1,13 @@
 
 Register (Denary): BC Data: 0
 Register (Binary): BC Data: 0000000000000000
-Register (Denary): DE Data: 127
-Register (Binary): DE Data: 0000000001111111
-Register (Denary): HL Data: 3
-Register (Binary): HL Data: 0000000000000011
+Register (Denary): DE Data: 0
+Register (Binary): DE Data: 0000
+Register (Denary): HL Data: 0
+Register (Binary): HL Data: 0000000000
 Register (Denary): SP Data: 3
 Register (Binary): SP Data: 0000000000000011
-Register (Denary): AF Data: 2
-Register (Binary): AF Data: 0000000000000010
+Register (Denary): AF Data: 0
+Register (Binary): AF Data: 0000000000
 Register (Denary): c Data: 0
 Register (Binary): c Data: 00000000

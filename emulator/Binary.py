@@ -3,6 +3,12 @@ import math
 # Form an interface between the CPU Values & The ALU
 
 
+
+def FromDecimal(n): # 8 bit only
+    binary = bin(n).replace("0b", "")
+    return "0" * (8 - len(binary)) + binary
+
+
 def Invert_8bit(x):
     return 7 - x
 def Invert_16bit(x):
