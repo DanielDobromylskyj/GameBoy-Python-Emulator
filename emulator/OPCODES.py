@@ -273,7 +273,7 @@ class Codes():
                    "system.NextLineNumber += 2"],
             "e7": [""],
             "e8": [""],
-            "e9": [""],
+            "e9": ["system.NextLineNumber = Register['HL'].ReadDenary()"],
             "ea": [""],
             "eb": [""],
             "ec": [""],

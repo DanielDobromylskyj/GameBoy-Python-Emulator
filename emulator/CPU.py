@@ -9,6 +9,7 @@ class Main():
 
 
         self.NextLineNumber = 1
+        self.Halted = False
 
         # Create Registers
         alpha = "BC,DE,HL,SP,AF,c".split(",") # c = Carry (CY)
@@ -76,11 +77,12 @@ class Main():
             print("[Emulator][Core] Failed To Execute Command:", e)
             print("[Emulator][Core] Line Error:", t, HEX)
 
-    def Halt(self): pass
-        #print("[Emulator] Halted - 'Low Power Mode'")
+    def Halt(self):
+        self.Halted = True
 
-    def Stop(self): pass
-        #print("[Emulator] Stopped - 'Very Low Power Mode'")
+    def Stop(self): # Hmmm - WAIT FOR EXTERNAL INPUT? What is that?
+        self.NextLineNumber += 2
+
 
     def Decode(self, hex):
         if type(hex) != int:

@@ -1,4 +1,4 @@
-from emulator import OPCODES, RAM, ROM, CPU, Commands, Binary, ALU
+from emulator import OPCODES, RAM, ROM, CPU, Binary, ALU
 
 
 
@@ -11,7 +11,7 @@ class Main:
         self.Opcode = OPCODES.Codes()
 
         self.BIN = Binary
-        self.CMD = Commands
+        self.CMD = ""
 
     def LoadGB(self, path):
         self.ROM.LoadGB(path)
