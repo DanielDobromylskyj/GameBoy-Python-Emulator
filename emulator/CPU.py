@@ -10,6 +10,11 @@ class Main():
 
         self.NextLineNumber = 1
         self.Halted = False
+        self.WaitingInterupt = False
+        self.Interupt = False
+
+        # Settings
+        self.SkipWaits = True # Skip STOP / HALT Commands?
 
         # Create Registers
         alpha = "BC,DE,HL,SP,AF,c".split(",") # c = Carry (CY)
@@ -33,6 +38,10 @@ class Main():
         for i in range(self.ROM.FileSize):
             if LineNumber >= self.ROM.FileSize + self.Go:
                 break
+
+            if self.WaitingInterupt:
+                self.Wait()
+
             self.NextLineNumber += 1 # We do it now so it doesn't interupt the jump command blah blah blah
 
             HEX = self.ROM.Read(LineNumber) # Read Hex Value
@@ -50,7 +59,7 @@ class Main():
             x = x + "\nRegister (Denary): " + str(key) + " Data: " +  str(self.Registers[key].ReadDenary())
             x = x + "\nRegister (Binary): " + str(key) + " Data: " +  str(self.Registers[key].ReadBinaryString())
         # registers.dump
-        print("[Emulator][Dump] Dumping RAM To dump/ram.dump")
+        print("[Emulator][DUMP] Dumping RAM To dump/ram.dump")
         f = open("dump/ram.dump", "w")
         f.write(str(self.RAM.Data))
         f.close()
@@ -77,11 +86,20 @@ class Main():
             print("[Emulator][Core] Failed To Execute Command:", e)
             print("[Emulator][Core] Line Error:", t, HEX)
 
+    def Wait(self): # Await For Interupt
+        if self.SkipWaits != True:
+            while True:
+                time.sleep(0.05)
+                if self.Interupt:
+                    self.Interupt = False
+                    return
+
     def Halt(self):
         self.Halted = True
 
     def Stop(self): # Hmmm - WAIT FOR EXTERNAL INPUT? What is that?
         self.NextLineNumber += 2
+        self.WaitingInterupt = True
 
 
     def Decode(self, hex):

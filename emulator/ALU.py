@@ -5,41 +5,59 @@ class Core():
         self.CPU = cpu
         self.Binary = Binary
 
+        # Flags - https://www.codeproject.com/Articles/1108304/Z-CPU-Flag-Register
+        self.FlagTable = {"Z":3, "N":2, "H":1, "C":0} # I am not sure what they actually are. I dont see the flag value used anywhere. Should be fine
+        self.Flags = "0000000"
 
-    def ADD_8Bit(self, Big_Reg, Small_Reg=None):
+    def SetFlag(self, Flag, Reset=False):
+        # Get Pos In Byte
+        Pos = 7 - self.FlagTable[Flag]
+        #Get Value
+        X = "1"
+        if Reset: X = "0"
+        # Set Bit
+        self.Flags = self.Flags[:Pos] + X + self.Flags[Pos:]
+    def ReadFlag(self, Flag):
+        return self.Flags[self.FlagTable[Flag]]
+
+
+
+    def ADD_8Bit(self, Big_Reg, Small_Reg=None, Cary=False):
         x = Big_Reg
         if Small_Reg != None: # This is done to allow a value to be passed OR A Register
             x = int(self.CPU.Registers[Big_Reg].ReadDenary(Small_Reg))
         try:
             OutputValue = x + int(self.CPU.Registers["AF"].ReadDenary("A"))
+            if Cary == True:
+                OutputValue += int(self.ReadFlag("C"))
         except:
-            print(x, type(x))
-            print(self.CPU.Registers["AF"].ReadDenary("A"), type(self.CPU.Registers["AF"].ReadDenary("A")))
             OutputValue = 0
 
-        Carry = 0
 
-        if OutputValue > 15:
-            Carry = 1
-            OutputValue = 15
+        Carry = False
+
+        if OutputValue > 255:
+            Carry = True
 
         self.CPU.Registers["AF"].WriteDenary(OutputValue, "A")
-        self.CPU.Registers["c"].WriteDenary(Carry) # Carry Should Really Only be 1 bit but oh well (its a 8bit reg not a 1 bit)
+        self.SetFlag("C", Carry)
 
-    def SUB_8Bit(self, Big_Reg, Small_Reg=None):
+    def SUB_8Bit(self, Big_Reg, Small_Reg=None, Cary=False):
         x = Big_Reg
         if Small_Reg != None: # This is done to allow a value to be passed OR A Register
             x = self.CPU.Registers[Big_Reg].ReadDenary(Small_Reg)
 
         OutputValue = self.CPU.Registers["AF"].ReadDenary("A") - x
-        Carry = 0
+        if Cary == True:
+            OutputValue -= int(self.ReadFlag("C"))
 
-        if OutputValue > 15:
-            Carry = 1 # Unsure about this line here. It is SUB not ADD
-            OutputValue = 15
+        Carry = False
+        if OutputValue < 0:
+            Carry = True
+
 
         self.CPU.Registers["AF"].WriteDenary(OutputValue, "A")
-        self.CPU.Registers["c"].WriteDenary(Carry) # Carry Should Really Only be 1 bit but oh well (its a 8bit reg not a 1 bit)
+        self.SetFlag("C", Carry)
 
     def AND_8Bit(self, Big_Reg, Small_Reg=None):
         x = Big_Reg

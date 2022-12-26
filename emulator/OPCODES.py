@@ -6,7 +6,7 @@ class Codes():
             "00": [""],  # NOP (No-Op / No Oporation)                                                                   DONE
             "01": ["x = instructions.Read(system.NextLineNumber)",
                    "y = instructions.Read(system.NextLineNumber + 1)",     #                                            POSSIBLE PROBLEM >> x + y or y + x?
-                   "Register['BC'].WriteDenary(system.Decode(x + y))",
+                   "Register['BC'].WriteDenary(system.Decode(y + x))",
                    "system.NextLineNumber += 3"],  # LD BC d16                                                          UNSURE
             "02": ["memory.Write(Register['BC'].ReadBinaryString(), Register['AF'].ReadBinaryString('A'))"],  #         NOTEST
             "03": ["binary.Increment(Register['BC'])"],  #                                                              NOTEST
@@ -21,13 +21,14 @@ class Codes():
             "0b": [""],
             "0c": [""],
             "0d": [""],
-            "0e": [""],
+            "0e": ["Register['BC'].WriteDenary(system.Decode(instructions.Read(system.NextLineNumber)), 'C')",
+                   "system.NextLineNumber += 2"],
             "0f": [""],
 
             "10": ["system.Stop()"], # Stop CPU                                                                         UNSURE/UNKNOWN
             "11": ["x = instructions.Read(system.NextLineNumber)",
                    "y = instructions.Read(system.NextLineNumber + 1)",     #                                            POSSIBLE PROBLEM >> x + y or y + x?
-                   "Register['DE'].WriteDenary(system.Decode(x + y))",
+                   "Register['DE'].WriteDenary(system.Decode(y + x))",
                    "system.NextLineNumber += 3"],  # LD BC d16                                                       UNSURE
             "12": ["memory.Write(Register['DE'].ReadBinaryString(), Register['AF'].ReadBinaryString('A'))"],  #         NOTEST
             "13": ["binary.Increment(Register['DE'])"],  #                                                              NOTEST
@@ -42,13 +43,14 @@ class Codes():
             "1b": [""],
             "1c": [""],
             "1d": [""],
-            "1e": [""],
+            "1e": ["Register['DE'].WriteDenary(system.Decode(instructions.Read(system.NextLineNumber)), 'E')",
+                   "system.NextLineNumber += 2"],
             "1f": [""],
 
             "20": [""], #                                                                                               UNKNOWN
             "21": ["x = instructions.Read(system.NextLineNumber)",
-                   "y = instructions.Read(system.NextLineNumber + 1)",     #                                            POSSIBLE PROBLEM >> x + y or y + x?
-                   "Register['HL'].WriteDenary(system.Decode(x + y))",
+                   "y = instructions.Read(system.NextLineNumber + 1)",     #
+                   "Register['HL'].WriteDenary(system.Decode(y + x))",
                    "system.NextLineNumber += 3"],  #                                                                 UNSURE
             "22": ["binary.Increment(Register['AF'], 'A')",
                    "memory.Write(Register['HL'].ReadBinaryString(), Register['AF'].ReadBinaryString('A'))",
@@ -65,13 +67,14 @@ class Codes():
             "2b": [""],
             "2c": [""],
             "2d": [""],
-            "2e": [""],
+            "2e": ["Register['HL'].WriteDenary(system.Decode(instructions.Read(system.NextLineNumber)), 'L')",
+                   "system.NextLineNumber += 2"],
             "2f": [""],
 
             "30": [""],  # UNKNOWN
             "31": ["x = instructions.Read(system.NextLineNumber)",
                    "y = instructions.Read(system.NextLineNumber + 1)",     #                                            POSSIBLE PROBLEM >> x + y or y + x?
-                   "Register['SP'].WriteDenary(system.Decode(x + y))",
+                   "Register['SP'].WriteDenary(system.Decode(y + x))",
                    "system.NextLineNumber += 3"],  #                                                                    NOTEST
             "32": ["binary.Decrement(Register['AF'], 'A')",
                    "memory.Write(Register['HL'].ReadBinaryString(), Register['AF'].ReadBinaryString('A'))",
@@ -88,7 +91,8 @@ class Codes():
             "3b": [""],
             "3c": [""],
             "3d": [""],
-            "3e": [""],
+            "3e": ["Register['AF'].WriteDenary(system.Decode(instructions.Read(system.NextLineNumber)), 'A')",
+                   "system.NextLineNumber += 2"],
             "3f": [""],
 
             "40": ["Register['BC'].WriteBinaryString(Register['BC'].ReadBinaryString('B'),'B')"],
@@ -166,15 +170,15 @@ class Codes():
             "84": ["ALU.ADD_8Bit('HL', 'H')"],
             "85": ["ALU.ADD_8Bit('HL', 'L')"],
             "86": ["ALU.ADD_8Bit(memory.Read(Register['BC'].ReadBinaryString()))"],
-            "87": ["ALU.ADD_8Bit('AF', 'B')"],
-            "88": [""],
-            "89": [""],
-            "8a": [""],
-            "8b": [""],
-            "8c": [""],
-            "8d": [""],
-            "8e": [""],
-            "8f": [""],
+            "87": ["ALU.ADD_8Bit('AF', 'A')"],
+            "88": ["ALU.ADD_8Bit('BC', 'B', True)"],
+            "89": ["ALU.ADD_8Bit('BC', 'C', True)"],
+            "8a": ["ALU.ADD_8Bit('DE', 'D', True)"],
+            "8b": ["ALU.ADD_8Bit('DE', 'E', True)"],
+            "8c": ["ALU.ADD_8Bit('HL', 'H', True)"],
+            "8d": ["ALU.ADD_8Bit('HL', 'L', True)"],
+            "8e": ["ALU.ADD_8Bit(memory.Read(Register['BC'].ReadBinaryString()), Carry=True)"],
+            "8f": ["ALU.ADD_8Bit('AF', 'A', True)"],
 
             "90": ["ALU.SUB_8Bit('BC', 'B')"],
             "91": ["ALU.SUB_8Bit('BC', 'C')"],
@@ -183,7 +187,7 @@ class Codes():
             "94": ["ALU.SUB_8Bit('HL', 'H')"],
             "95": ["ALU.SUB_8Bit('HL', 'L')"],
             "96": ["ALU.SUB_8Bit(memory.Read(Register['BC'].ReadBinaryString()))"],
-            "97": ["ALU.SUB_8Bit('AF', 'B')"],
+            "97": ["ALU.SUB_8Bit('AF', 'A')"],
             "98": [""],
             "99": [""],
             "9a": [""],

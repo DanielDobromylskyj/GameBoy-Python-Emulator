@@ -1,5 +1,7 @@
 from emulator import OPCODES, RAM, ROM, CPU, Binary, ALU
 
+import gui
+
 
 
 class Main:
@@ -13,12 +15,17 @@ class Main:
         self.BIN = Binary
         self.CMD = ""
 
+
+
+
     def LoadGB(self, path):
         self.ROM.LoadGB(path)
 
 
     def Execute(self):
         cpu = CPU.Main(self.RAM, self.ROM, self.Opcode, self.CMD, self.BIN, self.ALU)
+        gui.Boot(cpu)
+
         cpu.Start_Executing_From_ROM()
 
 
