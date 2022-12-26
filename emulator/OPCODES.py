@@ -3,7 +3,7 @@
 class Codes():
     def __init__(self):
         self.CodesToPython = {
-            "00": [""],  # NOP (No-Op / No Oporation)                                                                   DONE
+            "00": ["pass"],  # NOP (No-Op / No Oporation)                                                                   DONE
             "01": ["x = instructions.Read(system.NextLineNumber)",
                    "y = instructions.Read(system.NextLineNumber + 1)",     #                                            POSSIBLE PROBLEM >> x + y or y + x?
                    "Register['BC'].WriteDenary(system.Decode(y + x))",
@@ -300,7 +300,7 @@ class Codes():
             "fa": [""],
             "fb": [""],
             "fc": [""],
-            "fd": [""],
+            "fd": ["print('Register Dump:\\n', system.Dump())"],
             "fe": [""],
             "ff": [""],
 

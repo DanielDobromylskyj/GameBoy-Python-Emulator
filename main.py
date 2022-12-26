@@ -21,6 +21,9 @@ class Main:
     def LoadGB(self, path):
         self.ROM.LoadGB(path)
 
+    def LoadTXT(self, path):
+        self.ROM.LoadTXT(path)
+
 
     def Execute(self):
         cpu = CPU.Main(self.RAM, self.ROM, self.Opcode, self.CMD, self.BIN, self.ALU)
@@ -34,6 +37,7 @@ def Main_Func():
     main = Main()
 
     main.LoadGB("tetris.gb")
+    #main.LoadTXT("test.txt")
     main.Execute()
 
 

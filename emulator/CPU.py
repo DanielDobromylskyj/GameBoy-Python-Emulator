@@ -8,13 +8,13 @@ class Main():
         self.ROM, self.RAM, self.Opcodes, self.CM, self.binary, self.alu = ROM, RAM.RAM(), Opcodes, CMNDS, BIN, ALU
 
 
-        self.NextLineNumber = 1
+        self.NextLineNumber = 0
         self.Halted = False
         self.WaitingInterupt = False
         self.Interupt = False
 
         # Settings
-        self.SkipWaits = True # Skip STOP / HALT Commands?
+        self.SkipWaits = False # Skip STOP / HALT Commands?
 
         # Create Registers
         alpha = "BC,DE,HL,SP,AF,c".split(",") # c = Carry (CY)
@@ -34,6 +34,7 @@ class Main():
 
     def Start_Executing_From_ROM(self):
         LineNumber = 0
+
         self.Go = 0
         for i in range(self.ROM.FileSize):
             if LineNumber >= self.ROM.FileSize + self.Go:
@@ -42,10 +43,14 @@ class Main():
             if self.WaitingInterupt:
                 self.Wait()
 
-            self.NextLineNumber += 1 # We do it now so it doesn't interupt the jump command blah blah blah
-
             HEX = self.ROM.Read(LineNumber) # Read Hex Value
+
+            if "NextLineNumber" not in self.Opcodes.ToPython(HEX):
+                self.NextLineNumber += 1
+
             self.ExecuteHEX(HEX) # Execute The HEX
+
+
 
             LineNumber = int(str(self.NextLineNumber)) # Change The Line Number
 
@@ -67,6 +72,8 @@ class Main():
         f.write(x)
         f.close()
 
+        return x
+
 
     def ExecuteHEX(self, HEX):
         # Allows for cleaner writing of codes / HEX to Python
@@ -79,7 +86,6 @@ class Main():
         system = self
 
         t = self.Opcodes.ToPython(HEX)
-
         try:
             exec(t)
         except Exception as e:
@@ -88,17 +94,19 @@ class Main():
 
     def Wait(self): # Await For Interupt
         if self.SkipWaits != True:
+            print("Awaiting Interupr")
             while True:
                 time.sleep(0.05)
                 if self.Interupt:
                     self.Interupt = False
+                    self.WaitingInterupt = False
                     return
 
     def Halt(self):
         self.Halted = True
 
     def Stop(self): # Hmmm - WAIT FOR EXTERNAL INPUT? What is that?
-        self.NextLineNumber += 2
+        self.NextLineNumber += 1
         self.WaitingInterupt = True
 
 

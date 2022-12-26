@@ -14,6 +14,15 @@ class Cartridge():
         self.RawGB = [data[i*2:(i*2)+2] for i in range(len(data) // 2)]
         self.FileSize = len(self.RawGB)
 
+    def LoadTXT(self, path):
+        f = open(path, "r")
+        data = f.read()
+        f.close()
+
+        data = data.replace("\n", "").replace(" ", "")
+
+        self.RawGB = [data[i*2:(i*2)+2] for i in range(len(data) // 2)]
+        self.FileSize = len(self.RawGB)
 
 
     def Read(self, Location):
